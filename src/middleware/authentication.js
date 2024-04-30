@@ -1,25 +1,36 @@
-'use strict';
+const express = require('express');
+const app = express();
+const { auth, requiredScopes } = require('express-oauth2-jwt-bearer');
 
-const base64 = require('base-64');
-const bcrypt = require('bcrypt');
+// Authorization middleware. When used, the Access Token must
+// exist and be verified against the Auth0 JSON Web Key Set.
+const checkJwt = auth({
+  audience: 'https://dev-l58y8ollf2kfw8uo.us.auth0.com/api/v2/',
+  issuerBaseURL: `https://dev-l58y8ollf2kfw8uo.us.auth0.com/`,
+});
 
-let username = 'Ahmed'
-let password = 'Test123'
+// This route doesn't need authentication
+app.get('/api/public', function(req, res) {
+  res.json({
+    message: 'Hello from a public endpoint! You don\'t need to be authenticated to see this.'
+  });
+});
 
-let basicCredentials = `${username}:${password}`;
-console.log(basicCredentials);
+// This route needs authentication
+app.get('/api/private', checkJwt, function(req, res) {
+  res.json({
+    message: 'Hello from a private endpoint! You need to be authenticated to see this.'
+  });
+});
 
-let encodedCredentials = base64.encode(basicCredentials);
-console.log('Encoded credentials', encodedCredentials);
+const checkScopes = requiredScopes('read:messages');
 
-let decodedCredentials = base64.decode(encodedCredentials);
+app.get('/api/private-scoped', checkJwt, checkScopes, function(req, res) {
+  res.json({
+    message: 'Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this.'
+  });
+});
 
-let [un, pass] = basicCredentials.split(":");
-
-bcrypt.hash(pass, 15).then(hashedPassword => {
-    console.log("Hashed password:", hashedPassword)
-    
-    bcrypt.compare('supersecret', hashedPassword).then(bool => {
-        console.log('Do the passwords match?', bool);
-      });
-})
+app.listen(3000, function() {
+  console.log('Listening on http://localhost:3000');
+});
