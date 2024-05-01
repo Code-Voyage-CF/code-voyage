@@ -2,35 +2,85 @@ const express = require('express');
 const app = express();
 const { auth, requiredScopes } = require('express-oauth2-jwt-bearer');
 
+//I'll need to work with Axios
+//I need to use a POST method with Axios & Auth0
+//CLI for the Log-In
+//https://auth0.com/docs/api/authentication#social <-- Documentation for Auth0
+
 // Authorization middleware. When used, the Access Token must
 // exist and be verified against the Auth0 JSON Web Key Set.
-const checkJwt = auth({
-  audience: 'https://dev-l58y8ollf2kfw8uo.us.auth0.com/api/v2/',
-  issuerBaseURL: `https://dev-l58y8ollf2kfw8uo.us.auth0.com/`,
-});
 
-// This route doesn't need authentication
-app.get('/api/public', function(req, res) {
-  res.json({
-    message: 'Hello from a public endpoint! You don\'t need to be authenticated to see this.'
-  });
-});
+async function loadInquirer() {
+    const module = await import('inquirer');
+    return module.default;  // Accessing the default export of the module
+}
 
-// This route needs authentication
-app.get('/api/private', checkJwt, function(req, res) {
-  res.json({
-    message: 'Hello from a private endpoint! You need to be authenticated to see this.'
-  });
-});
+// Using the dynamically imported Inquirer
+async function mainMenu() {
+    const inquirer = await loadInquirer();
+    
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'action',
+            message: 'What do you want to do?',
+            choices: ['Create Account', 'Log In']
+        }
+    ]).then(answers => {
+        if (answers.action === 'Create Account') {
+            createAccount();
+        } else {
+            logIn();
+        }
+    });
+}
+function createAccount() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'username',
+            message: 'Choose a username:'
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: 'Enter your email address:'
+        },
+        {
+            type: 'password',
+            name: 'password',
+            message: 'Choose a password:',
+            mask: '*'
+        },
+        {
+            type: 'password',
+            name: 'confirmPassword',
+            message: 'Confirm your password:',
+            mask: '*'
+        }
+    ]).then(answers => {
+        console.log('Account Created Successfully!');
+        // Implement account creation logic here
+    });
+}
 
-const checkScopes = requiredScopes('read:messages');
+function logIn() {
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'username',
+            message: 'Enter your username:'
+        },
+        {
+            type: 'password',
+            name: 'password',
+            message: 'Enter your password:',
+            mask: '*'
+        }
+    ]).then(answers => {
+        console.log('Login Successful!');
+        // Implement login logic here
+    });
+}
 
-app.get('/api/private-scoped', checkJwt, checkScopes, function(req, res) {
-  res.json({
-    message: 'Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this.'
-  });
-});
-
-app.listen(3000, function() {
-  console.log('Listening on http://localhost:3000');
-});
+mainMenu();
