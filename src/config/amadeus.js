@@ -3,8 +3,8 @@ const Amadeus = require('amadeus');
 const dotenv = require('dotenv').config();
 
 const amadeus = new Amadeus({
-  clientId: process.env.AMADEUS_CLIENT_ID,
-  clientSecret: process.env.AMADEUS_CLIENT_SECRET,
+  clientId: 'Gyn48TPDX6ZMOmG3TzXw97gfoS7dsG7A',
+  clientSecret: 'OuNGK4DUoTFuMmxr',
 });
 
 
