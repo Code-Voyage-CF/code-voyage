@@ -28,3 +28,4 @@ xtest('should store the flight offer in the database', async () => {
   expect(retrievedFlight.departureDate.toISOString()).toBe(flightData.departureDate); // Check date
   expect(retrievedFlight.adults).toBe(flightData.adults); // Check adults
 });
+
