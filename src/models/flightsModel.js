@@ -13,7 +13,7 @@ const FlightOffer = sequelize.define('FlightOffer', {
   },
   destinationLocationCode: {
     type: DataTypes.STRING,
-    allowsNull: false,
+    allowNull: false,
   },
   departureDate: {
     type: DataTypes.DATEONLY,
