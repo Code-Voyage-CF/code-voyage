@@ -26,7 +26,7 @@ const ShoppingActivity = sequelize.define('ShoppingActivity', {
 });
 
 sequelize.sync().then(() => {
-  console.log('ShoppingActivity model synced with the database');
+  console.log('Shopping Model synced with the database');
 }).catch((error) => {
   console.error('Error syncing ShoppingActivity model:', error);
 });

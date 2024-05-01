@@ -1,5 +1,5 @@
 const amadeus = require('../config/amadeus.js');
-const { AmadeusShoppingActivities } = require('../models/shoppingmodel.js');
+const { AmadeusShoppingActivities } = require('../models/shoppingModel.js');
 
 // Controller function to get shopping activities
 exports.getShoppingActivities = async (req, res) => {
