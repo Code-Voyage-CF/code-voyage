@@ -1,5 +1,4 @@
-const Lodging = require('../src/models/lodgingModel');
-const sequelize = require('sequelize');
+const { sequelize, Lodging } = require('../src/controllers/LodgingController'); // Import sequelize instance and Lodging model
 
 beforeAll(async () => {
   await sequelize.sync({ force: true }); // Reset the database before running tests
@@ -29,9 +28,3 @@ test('should store the lodging offer in the database', async () => {
   expect(retrievedLodging.cityCode).toBe(lodgingData.cityCode); // Check cityCode
   expect(retrievedLodging.totalPrice).toBe(lodgingData.totalPrice); // Check totalPrice
 });
-
-
-
-
-
-

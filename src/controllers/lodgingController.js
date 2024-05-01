@@ -1,11 +1,14 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const dotenv = require('dotenv').config();
+const axios = require('axios'); // Import axios for HTTP requests
 
+// Initialize Sequelize with SQLite
 const sequelize = new Sequelize({
   dialect: 'sqlite',
   storage: './hotels.db',
 });
 
+// Define the Lodging model
 const Lodging = sequelize.define('Lodging', {
   hotelName: {
     type: DataTypes.STRING,
@@ -44,42 +47,68 @@ const Lodging = sequelize.define('Lodging', {
     allowNull: false
   },
   amenities: {
-    type: DataTypes.JSON, // Assuming amenities are returned as JSON data
+    type: DataTypes.JSON,
     allowNull: true
   },
   policies: {
-    type: DataTypes.JSON, // Assuming policies are returned as JSON data
+    type: DataTypes.JSON,
     allowNull: true
   },
   photos: {
-    type: DataTypes.JSON, // Assuming photos are returned as JSON data
+    type: DataTypes.JSON,
     allowNull: true
   }
 }, {
-  timestamps: false // We don't need timestamps for this model
+  timestamps: false
 });
 
-module.exports = {
-    createLodging: async function (data) {
-        try {
-          const lodging = await Lodging.create(data);
-          console.log("Lodging entry created:", lodging.toJSON());
-          return lodging; // Return the created lodging entry
-        } catch (error) {
-          console.error("Error creating lodging entry:", error);
-          throw error;
-        }
+// Define controller functions
+async function getHotelOffers(req, res) {
+  try {
+    // Fetch hotel offers from Amadeus API
+    const response = await axios.get('https://test.api.amadeus.com/v1/shopping/hotel-offers', {
+      params: {
+        cityCode: req.query.cityCode,
+        checkInDate: req.query.checkInDate,
+        checkOutDate: req.query.checkOutDate,
+        adults: req.query.adults,
       },
-      
-  getLodgingsByCity: async function (cityCode) {
-    try {
-      const lodgings = await Lodging.findAll({ where: { cityCode: cityCode } });
-      console.log("Lodgings retrieved for city:", cityCode);
-      return lodgings;
-    } catch (error) {
-      console.error("Error retrieving lodgings for city:", error);
-      throw error;
-    }
-  },
-  // Add more controller functions as needed
+    });
+
+    res.status(200).json(response.data);
+  } catch (error) {
+    console.error('Error fetching hotel offers:', error);
+    res.status(500).json({ error: 'Failed to fetch hotel offers' });
+  }
+}
+
+async function createLodging(data) {
+  try {
+    const lodging = await Lodging.create(data);
+    console.log("Lodging entry created:", lodging.toJSON());
+    return lodging;
+  } catch (error) {
+    console.error("Error creating lodging entry:", error);
+    throw error;
+  }
+}
+
+async function getLodgingsByCity(cityCode) {
+  try {
+    const lodgings = await Lodging.findAll({ where: { cityCode: cityCode } });
+    console.log("Lodgings retrieved for city:", cityCode);
+    return lodgings;
+  } catch (error) {
+    console.error("Error retrieving lodgings for city:", error);
+    throw error;
+  }
+}
+
+module.exports = {
+  getHotelOffers,
+  createLodging,
+  getLodgingsByCity,
+  sequelize,
+  Lodging
 };
+
