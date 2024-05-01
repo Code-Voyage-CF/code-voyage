@@ -12,13 +12,12 @@ const { auth, requiredScopes } = require('express-oauth2-jwt-bearer');
 
 async function loadInquirer() {
     const module = await import('inquirer');
-    return module.default;  // Accessing the default export of the module
+    return module.default;
 }
 
-// Using the dynamically imported Inquirer
 async function mainMenu() {
     const inquirer = await loadInquirer();
-    
+
     inquirer.prompt([
         {
             type: 'list',
@@ -34,37 +33,43 @@ async function mainMenu() {
         }
     });
 }
-function createAccount() {
-    inquirer.prompt([
-        {
-            type: 'input',
-            name: 'username',
-            message: 'Choose a username:'
-        },
+
+async function createAccount() {
+    const inquirer = await loadInquirer();
+
+    const { email } = await inquirer.prompt([
         {
             type: 'input',
             name: 'email',
-            message: 'Enter your email address:'
-        },
+            message: 'Enter your email address:',
+            validate: input => input ? true : "Email cannot be empty."
+        }
+    ]);
+
+    const { password, confirmPassword } = await inquirer.prompt([
         {
             type: 'password',
             name: 'password',
             message: 'Choose a password:',
-            mask: '*'
+            mask: '*',
+            validate: input => input.length >= 1 ? true : "Password cannot be empty."
         },
         {
             type: 'password',
             name: 'confirmPassword',
             message: 'Confirm your password:',
-            mask: '*'
+            mask: '*',
+            validate: input => input === password ? true : "Passwords do not match."
         }
-    ]).then(answers => {
-        console.log('Account Created Successfully!');
-        // Implement account creation logic here
-    });
+    ]);
+
+    console.log(`Email: ${email}, Password: ${password} (confirmed: ${confirmPassword})`);
+    console.log('Account Created Successfully!');
 }
 
-function logIn() {
+async function logIn() {
+    const inquirer = await loadInquirer();
+
     inquirer.prompt([
         {
             type: 'input',
@@ -79,7 +84,6 @@ function logIn() {
         }
     ]).then(answers => {
         console.log('Login Successful!');
-        // Implement login logic here
     });
 }
 
