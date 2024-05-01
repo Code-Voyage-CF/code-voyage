@@ -21,12 +21,12 @@ function searchHotelOffers(cityCode, checkInDate, checkOutDate, adults) {
 }
 
 // Example usage of the function to search for hotel offers in London for specific dates
-// searchHotelOffers('LON', '2024-10-10', '2024-10-12', 1)
-//   .then(function (offers) {
-//     console.log(offers);
-//   })
-//   .catch(function (error) {
-//     console.error("Something went wrong:", error);
-//   });
+searchHotelOffers('LON', '2024-10-10', '2024-10-12', 1)
+  .then(function (offers) {
+    console.log(offers);
+  })
+  .catch(function (error) {
+    console.error("Something went wrong:", error);
+  });
 
 
