@@ -8,9 +8,10 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
-const flightRoutes = require('./routes/flightsRoute.js');
+const flightRoutes = require('./src/routes/flightsRoute.js');
+const shoppingRoutes = require('./src/routes/shoppingRoute.js');
 
-app.use('/api', flightRoutes);
+app.use('/api', flightRoutes, shoppingRoutes);
 
 app.listen(PORT, () => {
     console.log(`Example app listening on PORT ${PORT}`)

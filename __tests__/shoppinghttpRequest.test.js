@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../app'); // Assuming your Express app is in app.js
-const { AmadeusShoppingActivities } = require('../models/shoppingModel');
+const { AmadeusShoppingActivities } = require('../src/models/shoppingModel');
 
 jest.mock('../models/shoppingModel', () => ({
   AmadeusShoppingActivities: jest.fn().mockImplementation(() => ({
