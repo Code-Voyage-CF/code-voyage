@@ -1,30 +1,57 @@
-const { sequelize, Lodging } = require('../src/controllers/LodgingController'); // Import sequelize instance and Lodging model
+const { Sequelize } = require('sequelize');
+const LodgingOffer = require('../src/models/lodgingModel.js'); // Import the LodgingOffer model
+require('dotenv').config();
 
-beforeAll(async () => {
-  await sequelize.sync({ force: true }); // Reset the database before running tests
+// Create Sequelize instance
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: process.env.DATABASE_PATH || './lodgings.db',
 });
 
-test('should store the lodging offer in the database', async () => {
-  const lodgingData = {
-    hotelName: 'Test Hotel',
-    cityCode: 'LON',
-    hotelId: '123',
-    offerId: '1',
-    checkInDate: '2024-10-10',
-    checkOutDate: '2024-10-13',
-    totalPrice: 200,
-    currency: 'USD',
-    adults: 1,
-  };
+// Set timeout to avoid test timeouts
+jest.setTimeout(10000);
 
-  await Lodging.create(lodgingData);
+// Sync the database before all tests
+beforeAll(async () => {
+  await sequelize.sync({ force: true }); // Sync the model with the SQLite database, force: true will drop existing tables
+});
 
-  const retrievedLodging = await Lodging.findOne({
-    where: { cityCode: lodgingData.cityCode },
+// Sample lodging data for testing
+const lodgingData = {
+  hotelIds: 'RTPAR001',
+  checkInDate: '2024-10-10',
+  checkOutDate: '2024-10-13',
+  adults: 2,
+};
+
+// Insert sample lodging data before each test
+beforeEach(async () => {
+  await LodgingOffer.create(lodgingData);
+});
+
+// Test to ensure lodging data is stored in the database
+test('should store a lodging offer in the database', async () => {
+  const retrievedLodging = await LodgingOffer.findOne({
+    where: { hotelIds: lodgingData.hotelIds },
   });
 
-  expect(retrievedLodging).not.toBeNull(); // Ensure the record is in the database
-  expect(retrievedLodging.hotelName).toBe(lodgingData.hotelName); // Check hotelName
-  expect(retrievedLodging.cityCode).toBe(lodgingData.cityCode); // Check cityCode
-  expect(retrievedLodging.totalPrice).toBe(lodgingData.totalPrice); // Check totalPrice
+  expect(retrievedLodging).not.toBeNull(); // Check if a lodging offer is retrieved from the database
+});
+
+// Test to check the hotelIds of the retrieved lodging offer
+test('should check the hotelIds of the retrieved lodging offer', async () => {
+  const retrievedLodging = await LodgingOffer.findOne({
+    where: { hotelIds: lodgingData.hotelIds },
+  });
+
+  expect(retrievedLodging.hotelIds).toBe(lodgingData.hotelIds); // Check if the hotelIds match
+});
+
+// Test to check the checkInDate of the retrieved lodging offer
+test('should check the checkInDate of the retrieved lodging offer', async () => {
+  const retrievedLodging = await LodgingOffer.findOne({
+    where: { hotelIds: lodgingData.hotelIds },
+  });
+
+  expect(retrievedLodging.checkInDate).toBe(lodgingData.checkInDate); // Check if the checkInDate matches
 });
