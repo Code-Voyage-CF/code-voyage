@@ -71,3 +71,4 @@ test('should check the number of adults in the retrieved flight offer', async ()
 
   expect(retrievedFlight.adults).toBe(flightData.adults);
 });
+
