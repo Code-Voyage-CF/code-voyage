@@ -8,12 +8,10 @@ const shoppingRoutes = require('./src/routes/shoppingRoute.js');
 const app = express()
 const PORT = process.env.PORT || 3000
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+// app.get('/', (req, res) => {
+//     res.send('Hello World!')
+// })
 
-// const flightRoutes = require('./src/routes/flightsRoute.js');
-// const shoppingRoutes = require('./src/routes/shoppingRoute.js');
 
 app.use('/flights', flightRoutes);
 app.use('/shopping', shoppingRoutes);
