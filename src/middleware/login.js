@@ -16,6 +16,7 @@ function login(req, res, next) {
     realm: 'Username-Password-Authentication'
   })
   .then(success => {
+    console.log('Token:', success);
     res.json({ success: true, token: success.access_token, idToken: success.id_token });
   })
   .catch(err => {

@@ -29,7 +29,6 @@ const client = jwksClient({
 });
 
 function getKey(header, callback) {
-<<<<<<< HEAD
   client.getSigningKey(header.kid, (err, key) => {
     if (err) {
       callback(err, null);
@@ -55,12 +54,6 @@ function verifyUser(req, res, next) {
     req.user = decoded;
     next();
   });
-=======
-  client.getSigningKey(header.kid, function(err, key) {
-    const signingKey = key.publicKey || key.rsaPublicKey;
-    callback(null, signingKey);
-  })
->>>>>>> 0c28290f5a133a4dea36c131633ed49426093d78
 }
 
 module.exports = verifyUser;
