@@ -3,6 +3,7 @@ const { Sequelize } = require('sequelize');
 const ShoppingActivity = require('../src/models/shoppingModel.js'); // Ensure the path to your model is correct
 require('dotenv').config();
 
+
 // Setting up the Amadeus instance
 const amadeus = new Amadeus({
   clientId: process.env.AMADEUS_CLIENT_ID,
