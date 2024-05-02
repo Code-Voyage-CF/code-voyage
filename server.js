@@ -9,8 +9,11 @@ const PORT = process.env.PORT || 3000
 // })
 
 const flightRoutes = require('./src/routes/flightsRoute.js');
+// const lodgingRoutes = require('./src/routes/lodgingRoute.js');
+
 
 app.use('/api', flightRoutes);
+// app.use('/api', lodgingRoutes);
 
 app.listen(PORT, () => {
     console.log(`Example app listening on PORT ${PORT}`)
