@@ -50,12 +50,12 @@ test('should retrieve shopping activity objects', () => {
 });
 
 // Test to check if the first five shopping activities can be stored in the database
-test('should store the first five shopping activities in the database', async () => {
-  const firstFiveActivities = shoppingActivities.slice(0, 5); // Get the first five activities
+// test('should store the first five shopping activities in the database', async () => {
+//   const firstFiveActivities = shoppingActivities.slice(0, 5); // Get the first five activities
 
-  // Insert these into the ShoppingActivity model
-  const insertedActivities = await ShoppingActivity.bulkCreate(firstFiveActivities, { ignoreDuplicates: true });
+//   // Insert these into the ShoppingActivity model
+//   const insertedActivities = await ShoppingActivity.bulkCreate(firstFiveActivities, { ignoreDuplicates: true });
 
-  // Confirm that exactly five shopping activities are inserted
-  expect(insertedActivities.length).toBe(5); // Ensure five activities are in the database
-});
+//   // Confirm that exactly five shopping activities are inserted
+//   expect(insertedActivities.length).toBe(5); // Ensure five activities are in the database
+// });

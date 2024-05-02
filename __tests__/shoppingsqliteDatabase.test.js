@@ -1,24 +1,46 @@
-const { ShoppingActivity, sequelize } = require('../src/models/shoppingModel'); // Correct the path if necessary
+const { Sequelize } = require('sequelize');
+const ShoppingActivity = require('../src/models/shoppingModel'); // Assuming your model is in shoppingModel.js
 
+// Initialize Sequelize with SQLite database
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: ':memory:', // Use in-memory database for testing
+});
+
+// Define test data
+const testData = [
+  { name: 'Shopping Activity 1', category: 'Category 1', rating: 4.5, price: 100 },
+  { name: 'Shopping Activity 2', category: 'Category 2', rating: 4.0, price: 80 },
+];
+
+// Test suite for ShoppingActivity model
 describe('ShoppingActivity model', () => {
+  // Before each test, sync the model with the database
   beforeEach(async () => {
-    try {
-      await sequelize.sync({ force: true });
-      console.log('Database synced');
-    } catch (error) {
-      console.error('Error syncing database:', error);
-    }
+    await sequelize.sync({ force: true });
   });
 
+  // Test inserting data into the database
   it('should insert data into the database', async () => {
-    const testData = [
-      { name: 'Shopping Activity 1', category: 'Category 1', rating: 4.5, price: 100 },
-      { name: 'Shopping Activity 2', category: 'Category 2', rating: 4.0, price: 80 },
-    ];
-
+    // Insert test data into the database
     await ShoppingActivity.bulkCreate(testData);
+
+    // Retrieve all records from the database
     const records = await ShoppingActivity.findAll();
 
-    expect(records.map(record => record.toJSON())).toEqual(testData);
+    // Assert that the number of records matches the test data length
+    expect(records.length).toBe(testData.length);
+  });
+
+  // Test retrieving data from the database
+  it('should retrieve data from the database', async () => {
+    // Insert test data into the database
+    await ShoppingActivity.bulkCreate(testData);
+
+    // Retrieve all records from the database
+    const records = await ShoppingActivity.findAll();
+
+    // Assert that the retrieved records match the test data
+    expect(records).toEqual(testData);
   });
 });
