@@ -3,11 +3,33 @@
 const jwt = require('jsonwebtoken');
 const jwksClient = require('jwks-rsa');
 
+<<<<<<< HEAD
+=======
+function verifyUser(request, response, next) {
+
+  function valid(err, user) {
+    if (err) {
+      next(err);
+    }
+    request.user = user;
+    next();
+  }
+
+  try {
+    const token = request.headers.authorization.split(' ')[1];
+    jwt.verify(token, getKey, {}, valid);
+  } catch (e) {
+    next('Not Authorized');
+  }
+}
+
+>>>>>>> 0c28290f5a133a4dea36c131633ed49426093d78
 const client = jwksClient({
   jwksUri: process.env.JWKS_URI,
 });
 
 function getKey(header, callback) {
+<<<<<<< HEAD
   client.getSigningKey(header.kid, (err, key) => {
     if (err) {
       callback(err, null);
@@ -33,6 +55,12 @@ function verifyUser(req, res, next) {
     req.user = decoded;
     next();
   });
+=======
+  client.getSigningKey(header.kid, function(err, key) {
+    const signingKey = key.publicKey || key.rsaPublicKey;
+    callback(null, signingKey);
+  })
+>>>>>>> 0c28290f5a133a4dea36c131633ed49426093d78
 }
 
 module.exports = verifyUser;

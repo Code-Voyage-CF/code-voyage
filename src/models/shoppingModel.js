@@ -31,4 +31,4 @@ sequelize.sync().then(() => {
   console.error('Error syncing ShoppingActivity model:', error);
 });
 
-module.exports = {ShoppingActivity, sequelize};
+module.exports = ShoppingActivity;
