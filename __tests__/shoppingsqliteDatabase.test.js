@@ -1,89 +1,69 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const { getShoppingActivities } = require('../src/controllers/shoppingController'); // Adjust the path as needed
+const { Sequelize } = require('sequelize');
+const ShoppingActivity = require('../src/models/shoppingModel.js');
+require('dotenv').config();
 
-// Define the test data
-const testData = [
-  { name: 'Shopping Activity 1', category: 'Category 1', rating: 4.5, price: 100 },
-  { name: 'Shopping Activity 2', category: 'Category 2', rating: 4.0, price: 80 },
-];
-
-// Create a Sequelize instance for SQLite
 const sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: ':memory:', // Use in-memory database for testing
+  storage: process.env.DATABASE_PATH || './shopping.db', 
 });
 
-// Define and sync the ShoppingActivity model
-const initDatabase = async () => {
-  const ShoppingActivity = sequelize.define('ShoppingActivity', {
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    category: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    rating: {
-      type: DataTypes.FLOAT,
-    },
-    price: {
-      type: DataTypes.FLOAT,
-      allowNull: false,
-    },
-  });
+jest.setTimeout(10000);
 
-  await sequelize.sync({ force: true }); // Sync the model with the database, force: true drops existing tables
+beforeAll(async () => {
+  await sequelize.sync({ force: true }); // Sync the model with the SQLite database
+});
 
-  console.log('Database synced');
-  return ShoppingActivity;
+const shoppingData = {
+  // Define your shopping activity data here
+  // Example:
+  name: 'Shopping Activity',
+  category: 'Category',
+  rating: 4.5,
+  price: 100,
+  
 };
 
-// Mock amadeus module
-jest.mock('../src/config/amadeus.js', () => ({
-  shopping: {
-    activities: {
-      get: jest.fn().mockResolvedValue({
-        data: testData,
-      }),
-    },
-  },
-}));
-
-// Test cases
-describe('ShoppingController', () => {
-  let ShoppingActivity;
-
-  // Before all tests, initialize the database and retrieve the model
-  beforeAll(async () => {
-    ShoppingActivity = await initDatabase();
-  });
-
-  it('should insert data into the database', async () => {
-    // Call the controller function with mock request and response objects
-    const req = { query: { cityCode: 'CITY_CODE' } };
-    const res = { status: jest.fn(), json: jest.fn() };
-
-    await getShoppingActivities(req, res);
-
-    // Retrieve all records from the database
-    const records = await ShoppingActivity.findAll();
-
-    // Assert that the retrieved records match the test data
-    expect(records.map(record => record.toJSON())).toEqual(testData);
-  });
-
-  it('should retrieve data from the database', async () => {
-    // Call the controller function with mock request and response objects
-    const req = { query: { cityCode: 'CITY_CODE' } };
-    const res = { status: jest.fn(), json: jest.fn() };
-
-    await getShoppingActivities(req, res);
-
-    // Retrieve all records from the database
-    const records = await ShoppingActivity.findAll();
-
-    // Assert that the number of retrieved records matches the number of test data
-    expect(records.length).toBe(testData.length);
-  });
+beforeEach(async () => {
+  await ShoppingActivity.create(shoppingData);
 });
+
+test('should store a shopping activity in the database', async () => {
+  const retrievedShoppingActivity = await ShoppingActivity.findOne({
+    where: { name: shoppingData.name }, 
+  });
+
+  expect(retrievedShoppingActivity).not.toBeNull();
+});
+
+test('should check the name of the retrieved shopping activity', async () => {
+  const retrievedShoppingActivity = await ShoppingActivity.findOne({
+    where: { category: shoppingData.category }, 
+  });
+
+  expect(retrievedShoppingActivity.name).toBe(shoppingData.name);
+});
+
+test('should check the category of the retrieved shopping activity', async () => {
+  const retrievedShoppingActivity = await ShoppingActivity.findOne({
+    where: { name: shoppingData.name }, 
+  });
+
+  expect(retrievedShoppingActivity.category).toBe(shoppingData.category);
+});
+
+test('should check the rating of the retrieved shopping activity', async () => {
+  const retrievedShoppingActivity = await ShoppingActivity.findOne({
+    where: { name: shoppingData.name }, 
+  });
+
+  expect(retrievedShoppingActivity.rating).toBe(shoppingData.rating);
+});
+
+test('should check the price of the retrieved shopping activity', async () => {
+  const retrievedShoppingActivity = await ShoppingActivity.findOne({
+    where: { name: shoppingData.name }, 
+  });
+
+  expect(retrievedShoppingActivity.price).toBe(shoppingData.price);
+});
+
