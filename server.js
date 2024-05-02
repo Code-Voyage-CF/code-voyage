@@ -8,9 +8,6 @@ const authRoute = require('./src/routes/authRoute.js');  // Include the authenti
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-
 app.use(express.json());  // This should come before any routes are defined
 app.use('/auth', authRoute); 
 app.use('/flights', flightRoutes);
