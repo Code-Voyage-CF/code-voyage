@@ -30,6 +30,12 @@ To run this application on your machine, follow these steps:
 
 ## 🏗️ Architecture
 
+- **UML**
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image.png)
+
+
 This application is built using the following technologies and libraries:
 
 - **amadeus**: "^10.0.0"
