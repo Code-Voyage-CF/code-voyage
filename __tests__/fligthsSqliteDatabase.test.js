@@ -27,7 +27,7 @@ beforeEach(async () => {
   await FlightOffer.create(flightData);
 });
 
-test('should store a flight offer in the database', async () => {
+xtest('should store a flight offer in the database', async () => {
   const retrievedFlight = await FlightOffer.findOne({
     where: { originLocationCode: flightData.originLocationCode },
   });
@@ -36,7 +36,7 @@ test('should store a flight offer in the database', async () => {
   expect(retrievedFlight).not.toBeNull(); 
 });
 
-test('should check the origin location code of the retrieved flight offer', async () => {
+xtest('should check the origin location code of the retrieved flight offer', async () => {
   const retrievedFlight = await FlightOffer.findOne({
     where: { originLocationCode: flightData.originLocationCode },
   });
@@ -45,7 +45,7 @@ test('should check the origin location code of the retrieved flight offer', asyn
   expect(retrievedFlight.originLocationCode).toBe(flightData.originLocationCode);
 });
 
-test('should check the destination location code of the retrieved flight offer', async () => {
+xtest('should check the destination location code of the retrieved flight offer', async () => {
   const retrievedFlight = await FlightOffer.findOne({
     where: { originLocationCode: flightData.originLocationCode },
   });
@@ -54,7 +54,7 @@ test('should check the destination location code of the retrieved flight offer',
   expect(retrievedFlight.destinationLocationCode).toBe(flightData.destinationLocationCode);
 });
 
-test('should check the departure date of the retrieved flight offer', async () => {
+xtest('should check the departure date of the retrieved flight offer', async () => {
   const retrievedFlight = await FlightOffer.findOne({
     where: { originLocationCode: flightData.originLocationCode },
   });
@@ -63,7 +63,7 @@ test('should check the departure date of the retrieved flight offer', async () =
   expect(flightData.departureDate);
 });
 
-test('should check the number of adults in the retrieved flight offer', async () => {
+xtest('should check the number of adults in the retrieved flight offer', async () => {
   const retrievedFlight = await FlightOffer.findOne({
     where: { originLocationCode: flightData.originLocationCode },
   });

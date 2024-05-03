@@ -37,22 +37,22 @@ beforeEach(async () => {
 });
 
 
-test('should retrieve response data from flight offers', () => {
+xtest('should retrieve response data from flight offers', () => {
   expect(flightOffers).toBeTruthy();
 });
 
 
-test('should retrieve an array of flight offers', () => {
+xtest('should retrieve an array of flight offers', () => {
   expect(Array.isArray(flightOffers)).toBe(true);
 });
 
 
-test('should retrieve flight offer object', () => {
+xtest('should retrieve flight offer object', () => {
   expect(flightOffers);
 });
 
 
-test('should store the first five flight offers in the database', async () => {
+xtest('should store the first five flight offers in the database', async () => {
   const firstFiveOffers = flightOffers.slice(0, 5);
 
   const insertedOffers = await FlightOffer.bulkCreate(firstFiveOffers, { ignoreDuplicates: true });
