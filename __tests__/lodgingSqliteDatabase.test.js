@@ -24,7 +24,7 @@ beforeEach(async () => {
   await LodgingOffer.create(lodgingData);
 });
 
-xtest('should store a lodging offer in the database', async () => {
+test('should store a lodging offer in the database', async () => {
   const retrievedLodging = await LodgingOffer.findOne({
     where: { hotelIds: lodgingData.hotelIds },
   });
@@ -32,7 +32,7 @@ xtest('should store a lodging offer in the database', async () => {
   expect(retrievedLodging).not.toBeNull();
 });
 
-xtest('should check the hotelIds of the retrieved lodging offer', async () => {
+test('should check the hotelIds of the retrieved lodging offer', async () => {
   const retrievedLodging = await LodgingOffer.findOne({
     where: { hotelIds: lodgingData.hotelIds },
   });
@@ -41,7 +41,7 @@ xtest('should check the hotelIds of the retrieved lodging offer', async () => {
 });
 
 
-xtest('should check the checkInDate of the retrieved lodging offer', async () => {
+test('should check the checkInDate of the retrieved lodging offer', async () => {
   const retrievedLodging = await LodgingOffer.findOne({
     where: { hotelIds: lodgingData.hotelIds },
   });

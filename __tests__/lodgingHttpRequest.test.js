@@ -33,19 +33,19 @@ beforeEach(async () => {
   hotelOffers = response.data;
 });
 
-xtest('should retrieve response data from hotel offers', () => {
+test('should retrieve response data from hotel offers', () => {
   expect(hotelOffers).toBeTruthy();
 });
 
-xtest('should retrieve an array of hotel offers', () => {
+test('should retrieve an array of hotel offers', () => {
   expect(Array.isArray(hotelOffers)).toBe(true);
 });
 
-xtest('should retrieve hotel offer object', () => {
+test('should retrieve hotel offer object', () => {
   expect(hotelOffers);
 });
 
-xtest('should store the first hotel offer in the database', async () => {
+test('should store the first hotel offer in the database', async () => {
   const firstOffer = hotelOffers.slice(0, 5);
 
   const insertedOffer = await LodgingOffer.bulkCreate(firstOffer, { ignoreDuplicates: true });
