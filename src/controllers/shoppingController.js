@@ -1,8 +1,11 @@
 const amadeus = require('../config/amadeus.js');
-const { AmadeusShoppingActivities } = require('../models/shoppingModel.js');
+const ShoppingActivity = require('../models/shoppingModel.js');
 
-// Controller function to get shopping activities
 exports.getShoppingActivities = async (req, res) => {
+    if (!req.headers.authorization) {
+        return res.status(401).json({ error: 'Authorization token is missing.' });
+      }
+      
     const { cityCode } = req.query;
 
     if (!cityCode) {

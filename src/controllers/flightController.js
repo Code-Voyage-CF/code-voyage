@@ -1,8 +1,11 @@
 const amadeus = require('../config/amadeus.js'); 
 const FlightOffer = require('../models/flightsModel.js');
 
-
 exports.getFlightOffers = async (req, res) => {
+  if (!req.headers.authorization) {
+    return res.status(401).json({ error: 'Authorization token is missing.' });
+  }
+
   const { origin, destination, departureDate, adults } = req.query;
 
   if (!origin || !destination || !departureDate || !adults) {

@@ -1,8 +1,11 @@
-const amadeus = require('../config/amadeus.js'); // Assuming you have a config file for Amadeus
+const amadeus = require('../config/amadeus.js');
 const HotelOffer = require('../models/lodgingModel.js');
 
-
 exports.getHotelOffers = async (req, res) => {
+  if (!req.headers.authorization) {
+    return res.status(401).json({ error: 'Authorization token is missing.' });
+  }
+
   const { cityCode, checkInDate, checkOutDate, adults } = req.query;
 
   if (!cityCode || !checkInDate || !checkOutDate || !adults) {
