@@ -4,9 +4,11 @@ db
 temp
 build
 memory
+hotels.db
 shopping.db
 lodgings.db
 flights.db
+/db/*.sqlite3
 
 # Created by https://www.gitignore.io/api/vim,osx,node,linux,windows
 ### Linux ###
