@@ -13,15 +13,28 @@ function login(req, res, next) {
   auth0Client.oauth.passwordGrant({
     username,
     password,
-    realm: 'Username-Password-Authentication'
+    realm: 'Username-Password-Authentication',
+    scope: 'openid'  // Include 'openid' to ensure an ID Token is returned
   })
   .then(success => {
-    res.json({ success: true, token: success.access_token, idToken: success.id_token });
+    console.log('Access Token:', success.data.access_token);
+    console.log('ID Token:', success.data.id_token);
+
+    res.json({
+      success: true,
+      token: success.access_token, // Access token
+      idToken: success.id_token // ID token
+    });
   })
   .catch(err => {
     console.log('ERROR: ', err);
-    res.status(401).json({ success: false, message: 'Authentication failed', error: err.message });
+    res.status(401).json({
+      success: false,
+      message: 'Authentication failed',
+      error: err.message
+    });
   });
 }
 
 module.exports = login;
+
