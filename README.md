@@ -52,18 +52,6 @@ This application is built using the following technologies and libraries:
 - **sqlite3"**: "^5.1.7"
 - **supertest**: "^7.0.0"
 
-## 🔄 Change Log
-
-Stay up-to-date with the latest enhancements and improvements made to this project:
-
-- **PLACEHOLDER**: [Timestamp] - Description of change.
-
-## 🕒 Estimates
-
-Plan your workflow efficiently with accurate time estimates for project completion:
-
-- **PLACEHOLDER**: [Estimated time for completion]
-
 ## 🤝 Credit and Collaborations
 
 We extend our heartfelt gratitude to the [Code Voyage Team](https://github.com/Code-Voyage-CF) for their invaluable collaboration and unwavering support during the development of this project.
