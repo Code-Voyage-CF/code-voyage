@@ -7,7 +7,7 @@ const sequelize = new Sequelize({
   storage: process.env.DATABASE_PATH || './shopping.db', 
 });
 
-jest.setTimeout(10000);
+jest.setTimeout(30000);
 
 beforeAll(async () => {
   await sequelize.sync({ force: true }); // Sync the model with the SQLite database

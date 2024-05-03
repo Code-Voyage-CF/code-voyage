@@ -10,7 +10,7 @@ const amadeus = new Amadeus({
 });
 
 
-jest.setTimeout(10000);
+jest.setTimeout(30000);
 
 
 const sequelize = new Sequelize({

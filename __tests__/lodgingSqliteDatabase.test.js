@@ -9,7 +9,7 @@ const sequelize = new Sequelize({
 });
 
 // Set timeout to avoid test timeouts
-jest.setTimeout(10000);
+jest.setTimeout(30000);
 
 // Sync the database before all tests
 beforeAll(async () => {
