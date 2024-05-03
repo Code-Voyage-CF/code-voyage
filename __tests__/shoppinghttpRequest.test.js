@@ -33,19 +33,19 @@ beforeEach(async () => {
 });
 
 
-xtest('should retrieve response data from shopping activities', () => {
+test('should retrieve response data from shopping activities', () => {
   expect(shoppingActivities).toBeTruthy(); 
 });
 
-xtest('should retrieve an array of shopping activities', () => {
+test('should retrieve an array of shopping activities', () => {
   expect(Array.isArray(shoppingActivities)).toBe(true); 
 });
 
-xtest('should retrieve shopping activity objects', () => {
+test('should retrieve shopping activity objects', () => {
   expect(shoppingActivities); 
 });
 
-xtest('should store the first five shopping activities in the database', async () => {
+test('should store the first five shopping activities in the database', async () => {
   const firstFiveActivities = shoppingActivities.slice(0, 5);
 
   const insertedActivities = await ShoppingActivity.bulkCreate(firstFiveActivities, { ignoreDuplicates: true });
