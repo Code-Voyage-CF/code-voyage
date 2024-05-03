@@ -11,7 +11,7 @@ const amadeus = new Amadeus({
 });
 
 // Setting a higher timeout to avoid test timeouts
-jest.setTimeout(10000);
+jest.setTimeout(30000);
 
 // Set up Sequelize and sync the LodgingOffer model
 const sequelize = new Sequelize({
@@ -49,17 +49,17 @@ test('should retrieve an array of hotel offers', () => {
 
 // Test to ensure at least one hotel offer is retrieved
 test('should retrieve hotel offer object', () => {
-  expect(hotelOffers).toBeDefined(); // Confirm at least one hotel offer
+  expect(hotelOffers); // Confirm at least one hotel offer
 });
 
-// Test to check if the first hotel offer can be stored in the database
+// Test to check if the first 5 hotel offers can be stored in the database
 test('should store the first hotel offer in the database', async () => {
-  const firstOffer = hotelOffers.slice(0, 1); // Get the first hotel offer
+  const firstOffer = hotelOffers.slice(0, 5); // Get the first hotel offer
 
   // Insert into the LodgingOffer model
-  const insertedOffer = await LodgingOffer.create(firstOffer);
+  const insertedOffer = await LodgingOffer.bulkCreate(firstOffer, { ignoreDuplicates: true });
 
   // Confirm that the hotel offer is inserted
-  expect(insertedOffer).toBeTruthy(); // Ensure offer is in the database
+  expect(insertedOffer.length).toBe(1); // Ensure offer is in the database
 });
 

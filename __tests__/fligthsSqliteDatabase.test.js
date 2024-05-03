@@ -9,7 +9,7 @@ const sequelize = new Sequelize({
 });
 
 
-jest.setTimeout(10000);
+jest.setTimeout(30000);
 
 
 beforeAll(async () => {

@@ -9,7 +9,7 @@ const amadeus = new Amadeus({
 });
 
 // Setting a higher timeout to avoid test timeouts
-jest.setTimeout(10000);
+jest.setTimeout(30000);
 
 // Set up Sequelize and sync the ShoppingActivity model
 const sequelize = new Sequelize({
