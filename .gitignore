@@ -4,6 +4,9 @@ db
 temp
 build
 memory
+shopping.db
+lodgings.db
+flights.db
 
 # Created by https://www.gitignore.io/api/vim,osx,node,linux,windows
 ### Linux ###
