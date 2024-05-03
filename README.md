@@ -4,6 +4,7 @@
 [![HitCount](http://hits.dwyl.com/Code-Voyage-CF/code-voyage.svg)](http://hits.dwyl.com/Code-Voyage-CF/code-voyage)
 [![GitHub stars](https://img.shields.io/github/stars/Code-Voyage-CF/code-voyage.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/Code-Voyage-CF/code-voyage/stargazers/)
 [![made-with-node.js](https://img.shields.io/badge/Made%20with-Node.js-1f425f.svg)](https://nodejs.org/)
+
 ![Logo](https://avatars.githubusercontent.com/u/168231233?s=400&u=35061c7cd2dd71fd65fcf513613191d265afd1db&v=4)
 
 - **Authors**: Ahmed Elnogoumi, Patrick Reveira, John Gause, Mak Trnka
