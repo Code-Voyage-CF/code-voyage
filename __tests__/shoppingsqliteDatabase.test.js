@@ -25,7 +25,7 @@ beforeEach(async () => {
   await ShoppingActivity.create(shoppingData);
 });
 
-xtest('should store a shopping activity in the database', async () => {
+test('should store a shopping activity in the database', async () => {
   const retrievedShoppingActivity = await ShoppingActivity.findOne({
     where: { name: shoppingData.name }, 
   });
@@ -33,7 +33,7 @@ xtest('should store a shopping activity in the database', async () => {
   expect(retrievedShoppingActivity).not.toBeNull();
 });
 
-xtest('should check the name of the retrieved shopping activity', async () => {
+test('should check the name of the retrieved shopping activity', async () => {
   const retrievedShoppingActivity = await ShoppingActivity.findOne({
     where: { category: shoppingData.category }, 
   });
@@ -41,7 +41,7 @@ xtest('should check the name of the retrieved shopping activity', async () => {
   expect(retrievedShoppingActivity.name).toBe(shoppingData.name);
 });
 
-xtest('should check the category of the retrieved shopping activity', async () => {
+test('should check the category of the retrieved shopping activity', async () => {
   const retrievedShoppingActivity = await ShoppingActivity.findOne({
     where: { name: shoppingData.name }, 
   });
@@ -49,7 +49,7 @@ xtest('should check the category of the retrieved shopping activity', async () =
   expect(retrievedShoppingActivity.category).toBe(shoppingData.category);
 });
 
-xtest('should check the rating of the retrieved shopping activity', async () => {
+test('should check the rating of the retrieved shopping activity', async () => {
   const retrievedShoppingActivity = await ShoppingActivity.findOne({
     where: { name: shoppingData.name }, 
   });
@@ -57,7 +57,7 @@ xtest('should check the rating of the retrieved shopping activity', async () => 
   expect(retrievedShoppingActivity.rating).toBe(shoppingData.rating);
 });
 
-xtest('should check the price of the retrieved shopping activity', async () => {
+test('should check the price of the retrieved shopping activity', async () => {
   const retrievedShoppingActivity = await ShoppingActivity.findOne({
     where: { name: shoppingData.name }, 
   });
