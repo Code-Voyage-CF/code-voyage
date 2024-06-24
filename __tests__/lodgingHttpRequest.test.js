@@ -26,8 +26,8 @@ beforeEach(async () => {
   const response = await amadeus.shopping.hotelOffersSearch.get({
     hotelIds: 'RTPAR001',
     adults: '2',
-    checkInDate: '2024-10-10',
-    checkOutDate: '2024-10-13',
+    checkInDate: '2024-12-10',
+    checkOutDate: '2024-12-13',
   });
 
   hotelOffers = response.data;

@@ -26,3 +26,4 @@ exports.getHotelOffers = async (req, res) => {
     res.status(500).json({ error: error.response ? error.response.data : error.message });
   }
 };
+

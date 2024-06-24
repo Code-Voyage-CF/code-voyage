@@ -29,7 +29,7 @@ beforeEach(async () => {
   const response = await amadeus.shopping.flightOffersSearch.get({
     originLocationCode: 'SYD',
     destinationLocationCode: 'BKK',
-    departureDate: '2024-06-01',
+    departureDate: '2024-12-01',
     adults: '2',
   });
 
